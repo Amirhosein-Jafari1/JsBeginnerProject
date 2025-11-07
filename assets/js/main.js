@@ -1,127 +1,122 @@
-const form = document.getElementById("userForm")
-const nameInput = document.getElementById("name")
-const familyInput = document.getElementById("family")
-const emailInput = document.getElementById("email")
-const jobInput = document.getElementById("job")
-const phoneInput = document.getElementById("phone")
-const genderSelect = document.getElementById("gender")
-const modal = document.getElementById("modal")
-const overlay = document.getElementById("overlay")
+async function loadUsers() {
+  try{
+    const res = await fetch('https://jsonplaceholder.typicode.com/users');
+      if(!res.ok) throw new Error(`خطا در واکشی کاربران:${res.status}`);
+      const data = await res.json();
 
-let people = []
-//افزودن کاربر جدید به لیست
-form.addEventListener("submit" , function(e) {
-    e.preventDefault()
-    console.log();
-    
-    const newperson = {
-        name: nameInput.value.trim(),
-        family: familyInput.value.trim(),
-        email: emailInput.value.trim(),
-        job: jobInput.value.trim(),
-        phone: phoneInput.value.trim(),
-        gender: genderSelect.value
-    }
-
-    console.log(newperson);
-
-    if (!newperson.name || !newperson.family || !newperson.email) {
-        alert("لطفاً فیلدهای الزامی را وارد کنید(نام٬ نام خانوادگی٬ ایمیل)")
-        return
-    }
-
-    people.push(newperson) ;
-    form.reset();
-    
-    console.log(people);
-})
-
-// نمایش همه کاربران
-document.getElementById("showModal").addEventListener("click" , ()=>{
-    if(people.length === 0) {
-        modal.innerHTML = `<h3> هنوز کاربری ثبت نشده است.</h3>`
-    }else{
-        modal.innerHTML= `<h3>لیست کاربران:</h3>`; 
-        const list = document.createElement("ul");
-
-        people.forEach( (person , index)=>{
-            
-            const { name,family,email,job,phone,gender} = person
-
-            const li = document.createElement("li"); 
-            li.innerText = `${index + 1} . ${name} ${family}
-            ایمیل: ${email}
-            شغل: ${job || '---'}
-            تلفن: ${phone || '---'}
-            جنسیت: ${gender || '---'}`;
-            list.appendChild(li)
-            console.log(list);
-        } )
-
-        modal.appendChild(list);
-    }
-
-    handleShowModal()
-})
-
-// بستن مدال با کلیک روی پس‌زمینه
-overlay.addEventListener("click" , ()=>{
-    overlay.style.opacity = "0";
-    overlay.style.visibility = "hidden";
-    modal.style.opacity = "0";
-    modal.style.visibility = "hidden";
-})
-
-// پیدا کردن با ایمیل
-document.getElementById("findByEmail").addEventListener("click" , ()=> {
-    const emailToFind = prompt("ایمیل مورد نظر را وارد کنید");
-    const person = people.filter(p => p.email === emailToFind.trim())
-
-    if(person.length > 0) {
-        modal.innerHTML = `<h3> افراد یافت شده:</h3>`
-        person.forEach(person => {
-            const {name, family, job, phone, gender} = person;
-            modal.innerHTML += `
-            <hr>
-            <p>نام: ${name}</p>
-            <p>نام خانوادگی: ${family}</p>
-            <p>شغل: ${job}</p>
-            <p>شماره تماس: ${phone}</p>
-            <p>جنسیت: ${gender}</p>`;
+      document.getElementById("table").style.opacity = "1";
+      const tbody = document.getElementById("tbody");
+      tbody.innerHTML = "";
+  
+      data.forEach(user => {
+        tbody.innerHTML +=
+          `<tr id="user-${user.id}"> 
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.phone}</td>
+            <td>${user.email}</td>
+            <td>${user.address.city}, ${user.address.street}</td>
+            <td>
+              <button onclick="deleteUser(${user.id})">حذف</button>
+              <button onclick= "editUser(${user.id}, '${user.name}', '${user.email}')">ویرایش</button>
+            </td>
+          </tr>`;
         });
-
-    }else {
-        modal.innerHTML = `<p>فردی با این ایمیل یافت نشد.</p>`;
+    } catch (error) {
+      alert("❌ خطا در بارگذاری کاربران " + error.message);
     }
+  }
 
-    handleShowModal()
-})
 
-// آیا همه شاغل‌اند؟
-document.getElementById("checkIfAllHavaJob").addEventListener("click" , ()=>{
+// اضافه کردن کاربر
+async function addUser() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
 
-    const allHaveJob = people.every(p => p.job.trim()!== "");
-    modal.innerHTML = allHaveJob
-    ? "<p> 💹 همه افراد دارای شغل هستند.</p>"
-    : "<p> ❌ برخی افراد شغل ثبت نکرده‌اند.</p>";
+  try{
+    const res = await fetch('https://jsonplaceholder.typicode.com/users', {
+     method: 'POST',
+     body: JSON.stringify({name: name, email:email}),
+     headers: { 'Content-type': 'application/json; charset=UTF-8'}
+    })
 
-    handleShowModal()
-})
+    if (!res.ok) throw new Error(`خطا در افزودن کاربر: ${res.status}`);
 
-//  آیا حداقل یک مرد‌هست؟
-document.getElementById("checkIfAnyIsMale").addEventListener("click" , ()=>{
-    const hasMale = people.some(p => p.gender === "مرد");
+    const user = await res.json();
 
-    modal.innerHTML = hasMale
-    ? "<p>👨حداقل یک آقا ثبت شده.</p>"
-    : "<p>🚫هیچ آقایی ثبت نشده</p>";
+    alert("کاربر با موفقیت ارسال شد(ولی ذخیره نمی شود چون  API تستی است)")
+    console.log("POST response", user);
+ 
+    tbody.innerHTML += `<tr>
+      <td>${user.id} </td>
+      <td>${user.name}</td>
+      <td> </td>
+      <td>${user.email}</td>
+      <td> </td>
+       <td>
+          <button onclick="deleteUser(${user.id})">حذف</button>
+          <button onclick= "editUser(${user.id}, '${user.name}', '${user.email}')">ویرایش</button>
+        </td>
+    </tr>`;
+ 
+    
+  } catch (error) {
+    alert("❌ کاربر اضافه نشد " + error.message)
+  }
+}
 
-    handleShowModal()
-})
 
-const handleShowModal= () => {
-    overlay.style.opacity = "1";
-    overlay.style.visibility = "visible";
-    modal.style.opacity = "1";
-    modal.style.visibility = "visible";
+// حذف کاربر
+async function deleteUser(id) {
+  try{
+    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`,{
+      method: 'DELETE'
+    });
+
+
+    if(!res.ok) throw new Error(`خطا در حذف کاربر: ${res.status}`);
+
+
+    alert(`کاربر با شناسه ${id}حذف شد (فقط در ظاهر، چون API واقعی نیست)`);
+    loadUsers();// بازخوانی لیست
+     
+  } catch (error) {
+    console.log("❌ خطا هنگام حذف کاربر", error.message);
+  }
+}
+
+
+
+// ویرایش کاربر
+async function editUser(id, oldName, oldEmail) {
+  const newName = prompt("نام جدید را وارد کنید:", oldName);
+  const newEmail = prompt("ایمیل جدید را وارد کنید:", oldEmail);
+
+  if (!newName || !newEmail) {
+    alert("❌ ورودی نامعتبر بود!");
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ name: newName, email: newEmail }),
+      headers: { 'Content-type': 'application/json; charset=UTF-8' }
+    });
+
+    if(!res.ok) throw new Error(`خطا در ویرایش کاربر: ${res.status}`);
+
+    const updated = await res.json();
+    console.log(updated);
+
+    alert("ویرایش انجام شد (نمایشی)");
+
+    // اعمال تغییرات به صورت نمایشی
+    const row = document.getElementById(`user-${id}`);
+    row.querySelector("td:nth-child(2)").textContent = updated.name;
+    row.querySelector("td:nth-child(4)").textContent = updated.email;
+
+  } catch (error) {
+    console.log("❌ خطا در ویرایش:", error.message);
+  }
 }
