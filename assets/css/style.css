@@ -1,0 +1,116 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: yekan;
+    src: url(../font/yekan-font/yekan-regular.woff);
+    src: url(../font/yekan-font/yekan-regular.ttf);
+}
+@font-face {
+    font-family: vazir;
+    src: url(../font/vazir-font-v18.0.0/Vazir-Bold.woff);
+    src: url(../font/vazir-font-v18.0.0/Vazir-Bold.woff2);
+}
+body{
+    font-family: yekan;
+    background-color: #ffe4c4;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container{
+    width: 300px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top:10px;
+}
+.container h3{
+    direction: rtl;
+    margin: 17px 13px 0 7px;
+}
+input{
+    padding: 7px;
+    text-align: right;
+    margin-left: 15px;
+    margin-top: 10px ;
+    width: 90%;
+    border: 1px solid rgb(170 , 170 , 170);
+    border-radius: 5px;
+}
+input::placeholder{
+    font-family: yekan;
+}
+
+select{
+    padding: 7px;
+    border: 1px solid rgb(170 , 170 , 170);
+    border-radius:5px;
+    outline: none;
+    width: 90%;
+    margin: 10px 0 0 15px;
+    direction: rtl;
+    font-family: yekan;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.buttons button{
+    margin: 10px 0 5px 9px;
+}
+button{
+    font-family:yekan;
+    width: 90%;
+    padding: 7px;
+    margin: 10px 0 5px 17px;
+    border:none;
+    border-radius: 5px;
+    background-color: rgb(49, 139, 255);
+    color: white;
+    cursor:pointer;
+}
+button:hover{
+    background-color: rgb(15, 102, 215);
+}
+
+.overlay{
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9;
+    transition: all 1s;
+}
+
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding:30px;
+    border-radius: 10px;
+    z-index: 10;
+    min-width: 300px;
+    max-width: 90%;
+    transition: all 1s;
+    width: 100vw;
+    direction: rtl;
+}
+.modal ul{
+    border: 1px solid rgb(118, 98, 209);
+    border-radius: 10px;
+    padding:15px
+}

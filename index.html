@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h3>فرم ثبت اطلاعات کاربران</h3>
+        <form id="userForm">
+            <input type="text" id="name" placeholder="نام">
+            <input type="text" id="family" placeholder="نام خانوادگی">
+            <input type="email" id="email" placeholder="ایمیل">
+            <input type="text" id="job" placeholder="شغل">
+            <input type="tel" id="phone" placeholder="شماره تماس">
+
+            <select  id="gender">
+                <option value="">جنسیت را انتخاب کنید</option>
+                <option value="مرد">مرد</option>
+                <option value="زن">زن</option>
+            </select>
+
+            <button type="submit">افزودن</button>
+
+        </form>
+
+        
+        <button id="showModal">نمایش همه کاربران</button>
+        <button id="findByEmail">پیدا کردن با‌ایمیل</button>
+        <button id="checkIfAllHavaJob">آیا همه شاغل‌اند؟</button>
+        <button id="checkIfAnyIsMale">آیا حداقل یک‌‌‌‌‌‌‌ مرد‌هست؟</button>
+
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="modal" class="modal"></div>
+
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
