@@ -1,72 +1,171 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 @font-face {
-    font-family: yekan;
-    src: url(../font/yekan-font/yekan-regular.woff);
-    src: url(../font/yekan-font/yekan-regular.ttf);
-}
-@font-face {
-    font-family: vazir;
-    src: url(../font/vazir-font-v18.0.0/Vazir-Bold.woff);
-    src: url(../font/vazir-font-v18.0.0/Vazir-Bold.woff2);
-}
-body{
-    font-family: yekan;
-    padding: 20px;
-    direction:rtl;
-    display:flex;
-    flex-direction:column;
-    align-items: center;
-    background-color: #f5f5f5;
-}
-h2{
-    margin-bottom: 1rem;
-}
-button{
-    background: greenyellow;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.491);
-    cursor: pointer;
-    transition: all 500ms;
-    font-family: inherit;
-    font-weight: bolder;
-    border: none;
-    margin: 10px;
-}
-button:hover{
-    background-color: rgb(54, 92, 243);
+     font-family: yekan;
+     src: url(../font/yekan-font/yekan-regular.woff);
+     src: url(../font/yekan-font/yekan-regular.ttf);
+   }
+
+
+* {
+  font-family: yekan;
 }
 
-table{
-    opacity:0;
-    background-color: #fff;
-    width: 90%;
-    box-shadow: 0 0 10px #ccc;
-    transition: all 3s;
-    border-collapse: collapse;
-    margin: 20px auto;
-}
-th ,td {
-    padding: 10px;
-    border: 1px solid #ddd;
+body {
+  background: url(../img/background.jpg) center/cover , linear-gradient(to top, black, white);
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  margin: 0;
+  padding: 0;
 }
 
-th{
-    background-color: #4caf50;
-    color: #fff;
+header {
+  background: linear-gradient(to left, rgba(0, 0, 255, 0.504), rgba(183, 0, 183, 0.635));
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  box-shadow: 0 2px 20px gray;
 }
 
-td button:nth-child(1) { background: rgb(243, 54, 98);  }
-td button:nth-child(2) { background: orange; margin-right: 5px; }
+.container {
+  max-width: 900px;
+  /* height: calc(100vh - 4rem); */
+  margin: 2rem auto;
+  background: #ffffffd0;
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  box-shadow: 0 0 25px rgba(128, 128, 128, 0.423);
+}
 
-input{
-    border: 1px solid rgb(170, 170, 170);
-    outline: none;
-    border-radius:5px;
-    padding: 0.5rem;
-    margin: 0.3rem;
+.products,
+.cart {
+  flex: 1;
+}
+
+.products-list {
+  font-family: yekan;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.product {
+  background: #f0f4ff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px #0001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(128, 128, 128, 0.384);
+}
+
+.product img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.product-price {
+  color: #4f8ef7;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.add-btn {
+  background: #8001ae;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: yekan;
+}
+
+.add-btn:hover {
+  background: #3573d7;
+}
+
+.cart {
+  background: linear-gradient(to top, rgba(135, 1, 135, 0.364), #f0f4ff);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px #0001;
+  min-width: 250px;
+  box-shadow: 0 0 15px gray;
+}
+
+.cart-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.7rem;
+  background: #e3eaff;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.cart-item-title {
+  font-size: 1rem;
+  flex: 1;
+}
+
+.cart-item-qty {
+  margin: 0 0.5rem;
+  color: #4f8ef7;
+  font-weight: bold;
+}
+
+.remove-btn {
+  background: #ff4f4f;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.remove-btn:hover {
+  background: #d73737;
+}
+
+.cart-total {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #3573d7;
+  font-weight: bold;
+}
+
+
+@media (max-width : 600px) {
+  .container {
+   flex-direction: column;
+  }
 }
